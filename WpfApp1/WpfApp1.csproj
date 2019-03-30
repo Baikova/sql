@@ -97,32 +97,46 @@
     <Compile Include="Author_0_matches.xaml.cs">
       <DependentUpon>Author_0_matches.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Author_Verif.cs" />
+    <Compile Include="EmplCard\EmplCardModel\ModelEmplCard.cs" />
+    <Compile Include="EmplCard\EmplCardViewModel\EmplCardViewModel.cs" />
     <Compile Include="KPI_PA.xaml.cs">
       <DependentUpon>KPI_PA.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Library\Author_Verif.cs" />
+    <Compile Include="Library\KPI.cs" />
+    <Compile Include="Library\Publication_Verif.cs" />
+    <Compile Include="Library\RelayCommand.cs" />
+    <Compile Include="Library\Translit.cs" />
+    <Compile Include="Library\ViewShower.cs" />
     <Compile Include="MainWindow\MainWindowViewModel\ViewModelMainWindow.cs" />
-    <Compile Include="NewEmpl.xaml.cs">
+    <Compile Include="NewEmpl\NewEmplViewModel\NewEmplViewModel.cs" />
+    <Compile Include="NewEmpl\NewEmplView\NewEmpl.xaml.cs">
       <DependentUpon>NewEmpl.xaml</DependentUpon>
     </Compile>
     <Compile Include="PublChoose.xaml.cs">
       <DependentUpon>PublChoose.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Publication_Verif.cs" />
-    <Compile Include="Translit.cs" />
     <Compile Include="Dataview.xaml.cs">
       <DependentUpon>Dataview.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EmplCard\EmplCardView\EmplCard.xaml.cs">
+      <DependentUpon>EmplCard.xaml</DependentUpon>
     </Compile>
     <Compile Include="UploadWindow.xaml.cs">
       <DependentUpon>UploadWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewShower.cs" />
+    <Compile Include="ViewEmpl\Model\BaseNotifyClass.cs" />
+    <Compile Include="ViewEmpl\Model\ModelEmpl.cs" />
+    <Compile Include="ViewEmpl\ViewModel\ViewModelEmpl.cs" />
+    <Compile Include="ViewEmpl\View\EmplView.xaml.cs">
+      <DependentUpon>EmplView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Window1.xaml.cs">
       <DependentUpon>Window1.xaml</DependentUpon>
     </Compile>
     <Page Include="Author_0_matches.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Dataview.xaml">
       <SubType>Designer</SubType>
@@ -144,17 +158,25 @@
       <DependentUpon>ViewMainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="NewEmpl.xaml">
+    <Page Include="NewEmpl\NewEmplView\NewEmpl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PublChoose.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="PublChoose.xaml">
+    <Page Include="EmplCard\EmplCardView\EmplCard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UploadWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ViewEmpl\View\EmplView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Window1.xaml">
       <SubType>Designer</SubType>
@@ -218,12 +240,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="MainWindow\MainWindowModel\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ViewEmpl\ViewEmpl.csproj">
-      <Project>{1c4cee72-d14c-4cdb-80fb-e2ec59782d49}</Project>
-      <Name>ViewEmpl</Name>
-    </ProjectReference>
+    <Folder Include="NewEmpl\NewEmplModel\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -27,7 +27,7 @@ namespace WpfApp1
         internal static DataTable newDt; //таблица с разделенными по авторам публикациями
         internal static DataTable errDt; //таблица для публикаций, в ходе обработки которых возникли исключения
         internal static int er = 0;
-        internal static string AuthVerifName;
+        public static string AuthVerifName;
         internal static string res; //строка с выбором типа файла WoS/Scopus
 
         public Dataview()
@@ -58,12 +58,18 @@ namespace WpfApp1
 
             //блок обработки файлов WoS
 
-            if (res == "WoS")
+            if (res == "WoS" || res =="WoS ESCI")
             {
                 //int j = 0;
                 int k = 0;
                 for (int j=0; j<dt.Rows.Count; j++)
                 {
+                    if (dt.Rows[j]["Авторы с аффилиациями"].ToString() == "")
+                    {
+                        if (j == 0)
+                            MessageBox.Show("Пустой файл");
+                        break;
+                    }
                     //int er = 0; //счетчик строк в файле с ошибками
                     //поиск в строке упоминания ВШЭ                       
                     if (dt.Rows[j]["Авторы с аффилиациями"].ToString().IndexOf("Higher") > -1)

@@ -20,8 +20,10 @@ namespace WpfApp1
                 if (str[i]!='\'')
                 {
                     lastName = lastName + str[i];
-                    i++;
+                   
                 }
+
+                i++;
             }
             i++; // пропускаем запятую в строке 
             lastName = lastName + str[i] + str[i + 1];

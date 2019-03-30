@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using NewEmpl.NewEmplViewModel;
 using ViewEmpl;
-using ViewEmpl.ViewModel;
 
 
 namespace WpfApp1
@@ -32,6 +32,26 @@ namespace WpfApp1
                 }));
 
             }
-        }       
+        }
+
+        public void ShowNewEmplView()
+        {
+            NewEmplViewModel vm = new NewEmplViewModel() { };
+            NewEmpl view = new NewEmpl() { DataContext = vm };
+            ViewShower.Show(view, true);
+        }
+        private RelayCommand viewNewEmplButton;
+        public ICommand ViewNewEmplButton
+        {
+            get
+            {
+                return viewNewEmplButton ??
+                       (viewNewEmplButton = new RelayCommand(obj =>
+                       {
+                           ShowNewEmplView();
+                       }));
+
+            }
+        }
     }
 }

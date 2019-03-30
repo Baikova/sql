@@ -1,20 +1,109 @@
-﻿<Window x:Class="WpfApp1.Author_0_matches"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WpfApp1"
-        mc:Ignorable="d"
-        Title="Дополнительная проверка" Height="400" Width="525">
+﻿<Window
+	x:Class="WpfApp1.Author_0_matches"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:local="clr-namespace:WpfApp1"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	Title="Дополнительная проверка"
+	Width="525"
+	Height="400"
+	mc:Ignorable="d">
 	<Grid>
-		<DataGrid x:Name="dataGridViewAuth_0" HorizontalAlignment="Left" Height="97" Margin="28,101,0,0" VerticalAlignment="Top" Width="464"/>
-		<Label Content="В существующем списке не найден данный автор:" HorizontalAlignment="Left" Height="30" Margin="28,10,0,0" VerticalAlignment="Top" Width="464"/>
-		<TextBox x:Name="textBoxAuthName" HorizontalAlignment="Left" Height="22" Margin="28,40,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="300" />
-		<Label Content="Возможно, данный автор упоминался ранее в другом варианте написания:" HorizontalAlignment="Left" Height="29" Margin="28,67,0,0" VerticalAlignment="Top" Width="464"/>
-		<Label Content="В противном случае выберите дальнейшее действие:&#xA;Если данный автор не является сотрудником текущего подразделения, то&#xA; сообщите об ошибке, нажав кнопку &quot;Ошибка&quot;. &#xA;Если автор является сотрудником текущего подразделения, но его нет в базе&#xD;&#xA;данных, нажмите &quot;Добавить&quot; " HorizontalAlignment="Left" Height="95" Margin="28,233,0,0" VerticalAlignment="Top" Width="464"/>
-		<Button x:Name="buttonErrorAuth" Content="Ошибка" HorizontalAlignment="Left" Height="26" Margin="28,333,0,0" VerticalAlignment="Top" Width="127" Click="buttonErrorAuth_Click"/>
-		<Button x:Name="buttonAddAuth" Content="Добавить" HorizontalAlignment="Left" Height="26" Margin="365,333,0,0" VerticalAlignment="Top" Width="127" Click="buttonAddAuth_Click"/>
-		<Button x:Name="buttonChoose" Content="Выбрать" HorizontalAlignment="Left" Height="25" Margin="369,203,0,0" VerticalAlignment="Top" Width="123" Click="buttonChoose_Click"/>
-
+		<Grid.RowDefinitions>
+			<RowDefinition Height="30" />
+			<RowDefinition Height="40" />
+			<RowDefinition Height="30" />
+			<RowDefinition Height="*" />
+			<RowDefinition Height="90" />
+			<RowDefinition Height="30" />
+			<RowDefinition Height="30" />
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition />
+			<ColumnDefinition />
+		</Grid.ColumnDefinitions>
+		<Label
+			Grid.Row="0"
+			Grid.ColumnSpan="2"
+			Width="464"
+			Height="30"
+			Margin="10,10,0,0"
+			HorizontalAlignment="Left"
+			VerticalAlignment="Top"
+			Content="В существующем списке не найден данный автор:" />
+		<TextBox
+			x:Name="textBoxAuthName"
+			Grid.Row="1"
+			Grid.ColumnSpan="2"
+			Width="350"
+			Height="22"
+			Margin="10,10,0,0"
+			HorizontalAlignment="Left"
+			VerticalAlignment="Top"
+			Text="TextBox"
+			TextWrapping="Wrap" />
+		<Label
+			Grid.Row="2"
+			Grid.ColumnSpan="2"
+			Width="464"
+			Height="29"
+			Margin="10,0,0,0"
+			HorizontalAlignment="Left"
+			VerticalAlignment="Top"
+			Content="Возможно, данный автор упоминался ранее в другом варианте написания:" />
+		<DataGrid
+			x:Name="dataGridViewAuth_0"
+			Grid.Row="3"
+			Grid.ColumnSpan="2"
+			Margin="1,1,0,0"
+			HorizontalAlignment="Left"
+			VerticalAlignment="Top"
+			ColumnWidth="*" />
+		<Label
+			Grid.Row="4"
+			Grid.ColumnSpan="2"
+			Width="464"
+			Height="95"
+			Margin="10,0,0,0"
+			HorizontalAlignment="Left"
+			VerticalAlignment="Top"
+			Content="В противном случае выберите дальнейшее действие:&#xA;Если данный автор не является сотрудником текущего подразделения, то&#xA; сообщите об ошибке, нажав кнопку &quot;Ошибка&quot;. &#xA;Если автор является сотрудником текущего подразделения, но его нет в базе&#xD;&#xA;данных, нажмите &quot;Добавить&quot; " />
+		<Button
+			x:Name="buttonChoose"
+			Grid.Row="5"
+			Grid.Column="1"
+			Width="120"
+			Height="25"
+			Margin="10,0,10,0"
+			HorizontalAlignment="Right"
+			VerticalAlignment="Top"
+			Click="buttonChoose_Click"
+			Content="Выбрать" />
+		<Button
+			x:Name="buttonErrorAuth"
+			Grid.Row="6"
+			Grid.Column="0"
+			Width="120"
+			Height="25"
+			Margin="10,0,0,0"
+			HorizontalAlignment="Left"
+			VerticalAlignment="Top"
+			Click="buttonErrorAuth_Click"
+			Content="Ошибка" />
+		<Button
+			x:Name="buttonAddAuth"
+			Grid.Row="6"
+			Grid.Column="1"
+			Width="120"
+			Height="25"
+			Margin="10,0,10,0"
+			HorizontalAlignment="Right"
+			VerticalAlignment="Top"
+			Click="buttonAddAuth_Click"
+			Content="Добавить" />
 	</Grid>
 </Window>
+
+
+

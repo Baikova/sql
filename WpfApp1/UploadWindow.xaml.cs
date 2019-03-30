@@ -27,6 +27,7 @@ namespace WpfApp1
         {
             InitializeComponent();
             boxDataSource.Items.Add("WoS");
+            boxDataSource.Items.Add("WoS ESCI");
             boxDataSource.Items.Add("Scopus");
             string ssqlconnectionstring = "Data Source=LAPTOP-LCJH6N9V;Initial Catalog=dip;Integrated Security=SSPI";
             SqlConnection conn = new SqlConnection(ssqlconnectionstring);

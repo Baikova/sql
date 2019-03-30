@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,13 +34,19 @@ namespace WpfApp1
         {
             string res = boxComboDepart.SelectedItem.ToString();
             if (res == "Департамент прикладной математики")
-                result.Text = "1,15";
+                //result.Text = "1,15";
+            {
+                string ssqlconnectionstring = "Data Source=LAPTOP-LCJH6N9V;Initial Catalog=dip;Integrated Security=SSPI";
+                SqlConnection conn = new SqlConnection(ssqlconnectionstring);
+                conn.Open();
+
+            }
             if (res == "Департамент электронной инженерии")
                 result.Text = "1,74";
             if (res == "Департамент компьютерной инженерии")
                 result.Text = "0,95";
             if (res == "МИЭМ")
-                result.Text = "1,31";
+                result.Text = KPI.Count_KPI("a").ToString();
         }
     }
 }

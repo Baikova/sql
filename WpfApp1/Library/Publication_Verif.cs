@@ -7,9 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-//namespace WpfApp1
-//{
-    class Publication_Verif
+namespace WpfApp1
+{
+    public class Publication_Verif
     {
 
         internal static DataRow verif; //копия строки из файла, которую проверяем
@@ -47,7 +47,8 @@ using System.Windows;
             //DataTable dtPubl;
             dtPubl = dsPubl.Tables[NameTable];
 
-            string sqlSyn = "SELECT * FROM [dip].[dbo].[Employees] WHERE synonym LIKE '%" + publiction["Авторы"].ToString() + "%'";
+            string lastName = Author_Verif.LastName(publiction["Авторы"].ToString());
+            string sqlSyn = "SELECT * FROM [dip].[dbo].[Employees] WHERE synonym LIKE '%" + lastName+ "%'";
             SqlDataAdapter daSyn = new SqlDataAdapter(sqlSyn, conn);
             DataSet dsSyn = new DataSet("synonym");
             daSyn.FillSchema(dsSyn, SchemaType.Source, "[dbo].[Employees]");
@@ -66,37 +67,23 @@ using System.Windows;
                 {
                     if (publiction["Авторы"].ToString() == drPubl["Авторы"].ToString() || countSyn>0)
                     {
-                        if (publiction["Название публикации"].ToString() == drPubl["Название публикации"].ToString())
+                        if (publiction["DOI"].ToString() == drPubl["DOI"].ToString())
                         {
-                            if (publiction["Год"].ToString() == drPubl["Год"].ToString()
-                                && publiction["Название журнала"].ToString() == drPubl["Название журнала"].ToString()
-                                && publiction["Кол-во авторов"].ToString() == drPubl["Кол-во авторов"].ToString()
-                                && publiction["DOI"].ToString() == drPubl["DOI"].ToString()
-                                && publiction["Вид публикации"].ToString() == drPubl["Вид публикации"].ToString())
+                            flagIns = false;//если все параметры равны, то это значит, что публикация уже существует и добавлять ее не нужно
+                            break;
+                        }
+                        else
+                         if (publiction["Название публикации"].ToString() == drPubl["Название публикации"].ToString())
                             {
-                                if (Dataview.res == "Scopus")
+                                if (publiction["Год"].ToString() == drPubl["Год"].ToString()
+                                    && publiction["Название журнала"].ToString() == drPubl["Название журнала"].ToString()
+                                    && publiction["Кол-во авторов"].ToString() == drPubl["Кол-во авторов"].ToString()
+                                    && publiction["Вид публикации"].ToString() == drPubl["Вид публикации"].ToString())
                                 {
-                                    if (publiction["SNIP"].ToString() == drPubl["SNIP"].ToString()
-                                        && publiction["Квартили по Scopus (SJR)"].ToString() == drPubl["Квартили по Scopus (SJR)"].ToString())
+                                    if (Dataview.res == "Scopus")
                                     {
-                                        flagIns = false;//если все параметры равны, то это значит, что публикация уже существует и добавлять ее не нужно
-                                        break;
-                                    }
-                                    else
-                                    {
-                                        PublChoose publChooseView = new PublChoose();
-                                        publChooseView.ShowDialog();
-                                        flagIns = false;
-                                        break;
-                                    }
-                                }
-                                else
-                                {
-                                    if (Dataview.res == "WoS")
-                                    {
-                                        if (publiction["Journal Impact Factor"].ToString() == drPubl["Journal Impact Factor"].ToString()
-                                            && publiction["Article Influence Score"].ToString() == drPubl["Article Influence Score"].ToString()
-                                            && publiction["Квартиль по WoS (JCR)"].ToString() == drPubl["Квартиль по WoS (JCR)"].ToString())
+                                        if (publiction["SNIP"].ToString() == drPubl["SNIP"].ToString()
+                                            && publiction["Квартили по Scopus (SJR)"].ToString() == drPubl["Квартили по Scopus (SJR)"].ToString())
                                         {
                                             flagIns = false;//если все параметры равны, то это значит, что публикация уже существует и добавлять ее не нужно
                                             break;
@@ -111,22 +98,41 @@ using System.Windows;
                                     }
                                     else
                                     {
-                                        //вывести окно выбора
-                                        PublChoose publChooseView = new PublChoose();
-                                        publChooseView.ShowDialog();
-                                        flagIns = false;
-                                        break;
+                                        if (Dataview.res == "WoS")
+                                        {
+                                            if (publiction["Journal Impact Factor"].ToString() == drPubl["Journal Impact Factor"].ToString()
+                                                && publiction["Article Influence Score"].ToString() == drPubl["Article Influence Score"].ToString()
+                                                && publiction["Квартиль по WoS (JCR)"].ToString() == drPubl["Квартиль по WoS (JCR)"].ToString())
+                                            {
+                                                flagIns = false;//если все параметры равны, то это значит, что публикация уже существует и добавлять ее не нужно
+                                                break;
+                                            }
+                                            else
+                                            {
+                                                PublChoose publChooseView = new PublChoose();
+                                                publChooseView.ShowDialog();
+                                                flagIns = false;
+                                                break;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            //вывести окно выбора
+                                            PublChoose publChooseView = new PublChoose();
+                                            publChooseView.ShowDialog();
+                                            flagIns = false;
+                                            break;
+                                        }
                                     }
                                 }
+                                else
+                                {
+                                    /*PublChoose publChooseView = new PublChoose();
+                                    publChooseView.ShowDialog();
+                                    flagIns = false;
+                                    break;*/
+                                }
                             }
-                            else
-                            {
-                                /*PublChoose publChooseView = new PublChoose();
-                                publChooseView.ShowDialog();
-                                flagIns = false;
-                                break;*/
-                            }
-                        }
                         
                     }
                      
@@ -316,7 +322,16 @@ using System.Windows;
                 }
 
             };
-            cmd.Parameters.Add("@publNameCh", SqlDbType.NVarChar).Value = UpdatePublName(insertRow["Название публикации"].ToString());
+            if (Dataview.res == "WoS ESCI")
+            {
+                bool ESCI = true;
+                cmd.Parameters.Add("@ESCI", SqlDbType.Bit).Value = ESCI;
+                insStr = insStr + ", [ESCI]";
+                insVal = insVal + ", @ESCI";
+
+            }
+
+                cmd.Parameters.Add("@publNameCh", SqlDbType.NVarChar).Value = UpdatePublName(insertRow["Название публикации"].ToString());
             //string sqlIns = "INSERT INTO [dip].[dbo].[Publ] ([Авторы], [Название публикации],  [Год], [Название журнала], [Кол-во авторов], [DOI], [Вид публикации], " +
             //    insStr + "VALUES ( @auth, @publNameIns, @year, @journ,  @authCount, @doi, @publType, " + insVal;
 
@@ -326,4 +341,4 @@ using System.Windows;
             int inscount = cmd.ExecuteNonQuery();
         }
     }
-//}
+}

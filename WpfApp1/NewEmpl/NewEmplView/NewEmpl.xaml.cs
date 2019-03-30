@@ -1,18 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using NewEmpl.NewEmplViewModel;
 
 namespace WpfApp1
 {
@@ -25,6 +15,8 @@ namespace WpfApp1
         public NewEmpl()
         {
             InitializeComponent();
+            this.DataContext = new NewEmplViewModel();
+
             textBoxNewName.Text = Dataview.AuthVerifName;
             comboDegree.Items.Add("Профессор");
             comboDegree.Items.Add("Доцент"); 
@@ -73,6 +65,7 @@ namespace WpfApp1
 
             int insertRow = cmd.ExecuteNonQuery();
             Publication_Verif.InsRow(Author_0_matches.drCur, "[dip].[dbo].[Publ]");
+            
             this.Close();
             
         }
