@@ -18,7 +18,7 @@ namespace EmplCard.EmplCardViewModel
         private ModelEmplCard selectedEmpl;
         public ObservableCollection<ModelEmplCard> Employee { get; set; }
         public string EmplId { get; set; }
-        public ModelEmplCard SelectedEmpl
+       /* public ModelEmplCard SelectedEmpl
         {
             get { return selectedEmpl; }
             set
@@ -26,13 +26,13 @@ namespace EmplCard.EmplCardViewModel
                 selectedEmpl = value;
                 NotifyPropertyChanged();
             }
-        }
-
-        /*public EmplCardViewModel()
-        {
-            
         }*/
 
+        public EmplCardViewModel()
+        {
+            
+        }
+        
         public ObservableCollection<ModelEmplCard> SelectEmpl()
         {
             string id = EmplId;

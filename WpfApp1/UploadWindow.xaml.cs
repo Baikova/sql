@@ -84,9 +84,8 @@ namespace WpfApp1
             {
                 boxListExcel.Items.Add(xlWB.Worksheets[i + 1].Name);
             }
-            
-
         }
+
         //выгрузка ИЗ Excel в БД
         public void Button_Click(object sender, RoutedEventArgs e)
         {

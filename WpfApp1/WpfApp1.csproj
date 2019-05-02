@@ -122,6 +122,9 @@
     <Compile Include="EmplCard\EmplCardView\EmplCard.xaml.cs">
       <DependentUpon>EmplCard.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SOP\SOP.xaml.cs">
+      <DependentUpon>SOP.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UploadWindow.xaml.cs">
       <DependentUpon>UploadWindow.xaml</DependentUpon>
     </Compile>
@@ -167,6 +170,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="EmplCard\EmplCardView\EmplCard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SOP\SOP.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

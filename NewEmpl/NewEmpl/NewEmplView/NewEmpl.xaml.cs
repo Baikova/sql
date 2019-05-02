@@ -2,7 +2,7 @@
 using System.Data.SqlClient;
 using System.Linq;
 using System.Windows;
-using NewEmpl.NewEmplViewModel;
+using ClassLibrary1;
 
 namespace WpfApp1
 {
@@ -15,9 +15,9 @@ namespace WpfApp1
         public NewEmpl()
         {
             InitializeComponent();
-            this.DataContext = new NewEmplViewModel();
-
-            textBoxNewName.Text = Dataview.AuthVerifName;
+            DataContext = new NewEmpl();
+            
+            textBoxNewName.Text = DataView.AuthVerifName;
             comboDegree.Items.Add("Профессор");
             comboDegree.Items.Add("Доцент"); 
             comboDegree.Items.Add("Старший преподаватель");
@@ -32,23 +32,9 @@ namespace WpfApp1
 
         private void buttonInsert_Click(object sender, RoutedEventArgs e)
         {
-            CountAut aut = new CountAut();
-            aut.count = 1;
-            
             string ssqlconnectionstring = "Data Source=LAPTOP-LCJH6N9V;Initial Catalog=dip;Integrated Security=SSPI";
-
-
             SqlConnection conn = new SqlConnection(ssqlconnectionstring);
             conn.Open();
-            //вычисляем ID последней публикации
-            SqlCommand countEmplCommand = conn.CreateCommand();
-            countEmplCommand.CommandType = CommandType.StoredProcedure;
-            countEmplCommand.CommandText = "count_publ";
-            
-            SqlDataReader reader = countEmplCommand.ExecuteReader();
-            int countEmpl = reader.GetInt16(0);
-            int emplId = countEmpl + 1;
-            aut.idNum.Add(emplId.ToString());
             string sqlInsert = "INSERT INTO [dip].[dbo].[Employees] (employees_id, empl_name, position, department, science_degree, translit_name) VALUES (@empl_id, @empl_name, @pos, @depart, @deg, @translit)";
 
             string sql = "SELECT * FROM [dip].[dbo].[Employees]";
@@ -78,7 +64,7 @@ namespace WpfApp1
             cmd.Parameters.Add("@depart", SqlDbType.NVarChar).Value = depart;
 
             int insertRow = cmd.ExecuteNonQuery();
-            Publication_Verif.InsRow(Author_0_matches.drCur, "[dip].[dbo].[Publ]", aut);
+            Publication_Verif.InsRow(Author_0_matches.drCur, "[dip].[dbo].[Publ]");
             
             this.Close();
             

@@ -211,7 +211,7 @@ namespace WpfApp1
         //проверка и добавление новых
         private void buttonInsertNew_Click(object sender, RoutedEventArgs e)
         {
-            int i;
+            CountAut i;
             foreach (DataRow drNewDt in newDt.Rows)
             {
                 AuthVerifName = drNewDt["Авторы"].ToString();
@@ -220,9 +220,9 @@ namespace WpfApp1
                 i = Author_Verif.CountAuthor(drNewDt); //считаем, сколько авторов подходит под маску по текущей строке
 
                 //если нашли ровно одного подходящего 
-                if (i == 1)
+                if (i.count == 1)
                 {
-                    Publication_Verif.PublVerif(drNewDt, "[dip].[dbo].[Publ]");
+                    Publication_Verif.PublVerif(drNewDt, "[dip].[dbo].[Publ]", i);
                     //тут функция проверки публикации
                 }
                                 
@@ -247,7 +247,9 @@ namespace WpfApp1
                     {
                         if (dtErr.Rows[j]["Авторы"].ToString()==AuthVerifName)
                         {
-                            Publication_Verif.PublVerif(drNewDt, "[dip].[dbo].[Error]");
+                            i.idNum.Add(0);
+
+                            Publication_Verif.PublVerif(drNewDt, "[dip].[dbo].[Error]", i);
                             flag = true;
                             errDt.ImportRow(drNewDt); //добавили в файл с ошибками строку, увеличили счетчик строк в этом файле
                             //Console.WriteLine(errDt.Rows[er]);

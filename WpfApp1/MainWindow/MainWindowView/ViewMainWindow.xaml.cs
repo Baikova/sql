@@ -57,6 +57,11 @@ namespace WpfApp1
             KPI_PA kpiWindow = new KPI_PA();
             kpiWindow.Show();
         }
+        private void MenuItem_Click_3(object sender, RoutedEventArgs e)
+        {
+            SOP.SOP kpiWindow = new SOP.SOP();
+            kpiWindow.Show();
+        }
     }
     
 }

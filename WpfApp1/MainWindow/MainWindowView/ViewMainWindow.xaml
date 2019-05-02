@@ -19,8 +19,9 @@
 						Header="Добавление нового сотрудника" />
 					<MenuItem Header="Редактирование существующего сотрудника" />
 				</MenuItem>
-				<MenuItem Click="MenuItem_Click" Header="Загрузка данных в БД" />
-				<MenuItem Click="MenuItem_Click_1" Header="Выгрузка данных из БД" />
+				<MenuItem Click="MenuItem_Click" Header="Загрузка новых публикаций" />
+				<MenuItem Click="MenuItem_Click_1" Header="Выгрузка публикаций из БД" />
+				<MenuItem Click="MenuItem_Click_3" Header="Загрузка результатов СОП" />
 			</MenuItem>
 			<MenuItem Header="Просмотр">
 				<MenuItem
@@ -42,3 +43,4 @@
 			Content="Добро пожаловать в систему &quot;Анализ KPI НИУ ВШЭ&quot;&#xD;&#xA;&#xD;&#xA;Выберите необходимое действие " />
 	</Grid>
 </Window>
+

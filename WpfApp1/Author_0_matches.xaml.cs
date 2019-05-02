@@ -32,7 +32,7 @@ namespace WpfApp1
             SqlConnection conn = new SqlConnection(ssqlconnectionstring);
             conn.Open();
             char first = Dataview.AuthVerifName[0];
-            string sql = "SELECT * FROM [dip].[dbo].[Employees] WHERE translit_name LIKE '" + first + "%'";
+            string sql = "SELECT [employees_id],[empl_name],[science_degree] ,[position], [stavka],[hours],[subdivision],[department],[department_name],[translit_name],[synonym] FROM [dip].[dbo].[Employees] WHERE translit_name LIKE '" + first + "%'";
             SqlDataAdapter daEmpl = new SqlDataAdapter(sql, conn);
             DataSet dsEmpl = new DataSet("dip");
             daEmpl.FillSchema(dsEmpl, SchemaType.Source, "[dbo].[Employees]");
@@ -47,8 +47,11 @@ namespace WpfApp1
         //обработка добавления автора из существующих сотрудников 
         private void buttonChoose_Click (object sender, RoutedEventArgs e)
         {
+            CountAut aut = new CountAut();
             DataRowView row = (DataRowView)dataGridViewAuth_0.SelectedItems[0];
             string s = row["empl_name"].ToString();
+            aut.count = 1;
+            aut.idNum.Add(row["employees_id"]);
             //MessageBox.Show(s);
             //drCur["Авторы"] = s;
             string ssqlconnectionstring = "Data Source=LAPTOP-LCJH6N9V;Initial Catalog=dip;Integrated Security=SSPI";
@@ -69,16 +72,19 @@ namespace WpfApp1
             int updateRow = cmd.ExecuteNonQuery();
 
             //тут функция проверки по публикации
-            Publication_Verif.PublVerif(drCur, "[dip].[dbo].[Publ]");
+            Publication_Verif.PublVerif(drCur, "[dip].[dbo].[Publ]", aut);
             this.Close();
         }
 
         // обработка сообщения об ошибке
         private void buttonErrorAuth_Click(object sender, RoutedEventArgs e)
         {
+            CountAut aut = new CountAut();
+            aut.count = 1;
+            aut.idNum.Add('0');
             Dataview.errDt.ImportRow(Author_Verif.AuthorRow); //добавили в файл с ошибками строку, увеличили счетчик строк в этом файле
             Dataview.er++;
-            Publication_Verif.PublVerif(drCur, "[dip].[dbo].[Error]");
+            Publication_Verif.PublVerif(drCur, "[dip].[dbo].[Error]", aut);
             //Publication_Verif.InsRow(drCur, "[dip].[dbo].[Error]");
             //MessageBox.Show(Dataview.er.ToString());
             this.Close();

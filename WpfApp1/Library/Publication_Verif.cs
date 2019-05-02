@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -28,7 +29,7 @@ namespace WpfApp1
             return publicName;
         }
        
-        public static void PublVerif (DataRow publiction, string NameTable)
+        public static void PublVerif (DataRow publiction, string NameTable, CountAut author)
         {
             verif = publiction;
             string publName = publiction["Название публикации"].ToString(); // оригинальное название 
@@ -138,7 +139,7 @@ namespace WpfApp1
                      
                 }
                 if (flagIns)//публикация с таким названием уже есть, но нет данного автора
-                    InsRow(publiction, NameTable);
+                    InsRow(publiction, NameTable, author);
 
 
             }
@@ -201,7 +202,8 @@ namespace WpfApp1
                 }
                 if (!flag)
                 {
-                    InsRow(verif, NameTable);
+                    conn.Close();
+                    InsRow(verif, NameTable, author);
                    
                 }
                                 
@@ -209,18 +211,78 @@ namespace WpfApp1
             
         }
 
-        public static void InsRow (DataRow insertRow, string NameTable)
+        public static void InsRow (DataRow insertRow, string NameTable, CountAut aut)
         {
-            string ssqlconnectionstring = "Data Source=LAPTOP-LCJH6N9V;Initial Catalog=dip;Integrated Security=SSPI";
+            string ssqlconnectionstring = "Data Source=LAPTOP-LCJH6N9V;Initial Catalog=dip;Integrated Security=SSPI;MultipleActiveResultSets=True";
             SqlConnection conn = new SqlConnection(ssqlconnectionstring);
             conn.Open();
 
+                       //вычисляем ID последней публикации
+                      /* string sqlCount = "SELECT * FROM [dip].[dbo].[Publ]";
+                       SqlCommand cmdCount = new SqlCommand();
+                       cmdCount.Connection = conn;
+                       cmdCount.CommandText = sqlCount;
+                       int countPubl = cmdCount.ExecuteNonQuery();*/
+            SqlCommand countPublCommand = conn.CreateCommand();
+            countPublCommand.CommandType = CommandType.StoredProcedure;
+            countPublCommand.CommandText = "count_publ";
+
+
+            SqlDataReader reader = countPublCommand.ExecuteReader();
+
+            /*string ssqlconnectionstring = "Data Source=LAPTOP-LCJH6N9V;Initial Catalog=dip;Integrated Security=SSPI";
+            SqlConnection conn = new SqlConnection(ssqlconnectionstring);
+            conn.Open();
+            SqlCommand comm = conn.CreateCommand();
+            comm.CommandType = CommandType.StoredProcedure;
+            comm.CommandText = "view_empl";
+            //DataTable dt = new DataTable();
+            //dt.Load(comm.ExecuteReader());
+
+            SqlDataReader reader = comm.ExecuteReader();*/
+
+            int countPubl = 0;
+            //string p = "";
+
+            int publId = countPubl + 1;
+
+            //сначала добавляем пару id "автор-публикация" в таблицу 
+            if ((int.Parse(aut.idNum[0].ToString())) != 0)
+            {
+                string sqlExpression = "ins_empl_publ";
+                SqlConnection connIns = new SqlConnection(ssqlconnectionstring);
+                connIns.Open();
+                SqlCommand command = new SqlCommand(sqlExpression, connIns);
+                // указываем, что команда представляет хранимую процедуру
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                // параметр 
+                SqlParameter emplIdParameter = new SqlParameter
+                {
+                    ParameterName = "@emplId",
+                    Value = int.Parse(aut.idNum[0].ToString())
+                };
+                SqlParameter publIdParameter = new SqlParameter
+                {
+                    ParameterName = "@publId",
+                    Value = int.Parse(publId.ToString())
+                };
+                // добавляем параметр
+                command.Parameters.Add(emplIdParameter);
+                command.Parameters.Add(publIdParameter);
+                
+                int insEmplPubl = command.ExecuteNonQuery();
+                connIns.Close();
+            }
+            //int insEmplPubl = command.ExecuteNonQuery();
+            //добавляем публикацию в таблицу со всеми публикациями
             SqlCommand cmd = new SqlCommand();
             cmd.Parameters.Clear();
             string sqlIns = "INSERT INTO "+ NameTable;
             string insStr = "";
             string insVal = "";
-
+            //cmd.Parameters.Add("@publ_id", SqlDbType.Int).Value = publId;
+            //insStr = insStr + "[publ_id]";
+            //insVal = insVal + "@publ_id";
 
             if (insertRow["Авторы"].ToString() != "")
             {
@@ -263,6 +325,13 @@ namespace WpfApp1
                 insVal = insVal + ", @authCount";
             }
 
+            if (insertRow["Дата внесения в базу"].ToString() != "")
+            {
+                string date = insertRow["Дата внесения в базу"].ToString();
+                cmd.Parameters.Add("@date", SqlDbType.NVarChar).Value = date;
+                insStr = insStr + ", [Дата внесения в базу]";
+                insVal = insVal + ", CONVERT(nvarchar, @date, 104)";
+            }
 
             if (insertRow["DOI"].ToString() != "")
             {

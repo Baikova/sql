@@ -30,7 +30,6 @@ namespace WpfApp1
             get { return selectedEmpl; }
             set
             {
-                //selectedEmpl = value;
                 selectedEmpl = value;
                 NotifyPropertyChanged("SelectedEmpl");
             }
@@ -92,15 +91,19 @@ namespace WpfApp1
 
         public void ShowEmplCardView(object ob)
         {
-            ModelEmpl emp = ob as ModelEmpl;
+           /*
+            * ModelEmpl emp = ob as ModelEmpl;
+            
             
             EmplCardViewModel vm = new EmplCardViewModel() { EmplId = SelectedEmpl.Id.ToString() };
             EmplCard view = new EmplCard()  { DataContext = vm};
-  
+            
             MessageBox.Show(SelectedEmpl.Id.ToString());
             ViewShower.Show(view, true, b => { if (b != null && b.Value) vm.EmplId = SelectedEmpl.Id.ToString(); });
             //view.Show();
-            
+            */
+            EmplCard emplCardWindow = new EmplCard(SelectedEmpl.Id.ToString());
+            emplCardWindow.Show();
         }
 
         private RelayCommand viewEmplCardButton;

@@ -72,6 +72,7 @@ namespace WpfApp1
                 wnd.Content = sp;*/
                 //wnd.Closed += (s, e) => p_closeAction();
                 string num = p_closeAction.ToString();
+                
                 if (p_isModal)
                 {
                     Button cancelButton = new Button();
