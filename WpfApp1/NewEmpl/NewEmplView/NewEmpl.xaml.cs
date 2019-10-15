@@ -76,8 +76,10 @@ namespace WpfApp1
             cmd.Parameters.Add("@deg", SqlDbType.NVarChar).Value = deg;
             cmd.Parameters.Add("@translit", SqlDbType.NVarChar).Value = translit_name;
             cmd.Parameters.Add("@depart", SqlDbType.NVarChar).Value = depart;
-
-            int insertRow = cmd.ExecuteNonQuery();
+            if (empl_name == "")
+                MessageBox.Show("Необходимо добавить ФИО сотрудника");
+            else
+                { int insertRow = cmd.ExecuteNonQuery();}
             Publication_Verif.InsRow(Author_0_matches.drCur, "[dip].[dbo].[Publ]", aut);
             
             this.Close();

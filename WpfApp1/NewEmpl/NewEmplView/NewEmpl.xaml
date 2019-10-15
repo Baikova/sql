@@ -24,7 +24,7 @@
 			Margin="10,42,0,0"
 			HorizontalAlignment="Left"
 			VerticalAlignment="Top"
-			Text="TextBox"
+			Text=""
 			TextWrapping="Wrap" />
 		<Button
 			x:Name="buttonInsert"
@@ -86,7 +86,7 @@
 			Margin="10,110,0,0"
 			HorizontalAlignment="Left"
 			VerticalAlignment="Top"
-			Text="TextBox"
+			Text=""
 			TextWrapping="Wrap" />
 		<Label
 			Width="293"
